@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "site",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["C:/Users/bd18/AppData/Local/Temp/claude/C--Users-bd18-Documents-Projects-GIS-Showcase-Website/d7ccdc51-435b-4afd-ae8a-e8ebc6ec816f/scratchpad/serve.js", "C:/Users/bd18/Documents/Projects/GIS_Showcase_Website"],
+      "port": 8080
+    }
+  ]
+}

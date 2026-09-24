@@ -1,0 +1,13 @@
+{
+  "name": "rice-gis-showcase-2026",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "images": "node scripts/optimize-images.mjs",
+    "images:force": "node scripts/optimize-images.mjs --force",
+    "sheet": "node scripts/snapshot-sheet.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.4"
+  }
+}

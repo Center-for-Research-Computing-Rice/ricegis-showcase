@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2026 Rice GIS Showcase</title>
+  <meta name="description" content="The 2026 Rice GIS Showcase and GIS Day workshops, November 17–18, 2026, Kraft Hall 130, Rice University.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="Rice University — GIS Showcase home">
+        <img src="https://brand.rice.edu/sites/g/files/bxs5371/files/inline-images/rice-university-secondary-identity-horizontal.png"
+             alt="Rice University" width="190" height="26">
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">
+        <span class="sr-only">Menu</span>
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <a href="#overview">Overview</a>
+        <a href="#showcase">Showcase</a>
+        <a href="#schedule">Schedule</a>
+        <a href="#workshops">Workshops</a>
+        <a href="#gallery" hidden>Gallery</a>
+        <a href="#visit">Visit</a>
+        <a href="#register" class="btn btn-primary btn-sm">Register</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-label="Event introduction">
+      <!-- Slideshow photos come from images/hero/ — run update-site.bat after adding or removing photos. -->
+      <div class="hero-slides" aria-hidden="true">
+        <!-- hero:start (generated, do not edit) -->
+        <picture class="hero-slide is-active">
+          <source type="image/avif" srcset="images/web/hero-1-presenter-480.avif 480w, images/web/hero-1-presenter-800.avif 800w, images/web/hero-1-presenter-1200.avif 1200w, images/web/hero-1-presenter-1600.avif 1600w, images/web/hero-1-presenter-2400.avif 2400w" sizes="100vw">
+          <source type="image/webp" srcset="images/web/hero-1-presenter-480.webp 480w, images/web/hero-1-presenter-800.webp 800w, images/web/hero-1-presenter-1200.webp 1200w, images/web/hero-1-presenter-1600.webp 1600w, images/web/hero-1-presenter-2400.webp 2400w" sizes="100vw">
+          <img src="images/web/hero-1-presenter-1600.jpg" srcset="images/web/hero-1-presenter-480.jpg 480w, images/web/hero-1-presenter-800.jpg 800w, images/web/hero-1-presenter-1200.jpg 1200w, images/web/hero-1-presenter-1600.jpg 1600w, images/web/hero-1-presenter-2400.jpg 2400w" sizes="100vw"
+               width="6000" height="4000" alt="" fetchpriority="high" decoding="async">
+        </picture>
+        <picture class="hero-slide">
+          <source type="image/avif" srcset="images/web/hero-2-audience-480.avif 480w, images/web/hero-2-audience-800.avif 800w, images/web/hero-2-audience-1200.avif 1200w, images/web/hero-2-audience-1600.avif 1600w, images/web/hero-2-audience-2400.avif 2400w" sizes="100vw">
+          <source type="image/webp" srcset="images/web/hero-2-audience-480.webp 480w, images/web/hero-2-audience-800.webp 800w, images/web/hero-2-audience-1200.webp 1200w, images/web/hero-2-audience-1600.webp 1600w, images/web/hero-2-audience-2400.webp 2400w" sizes="100vw">
+          <img src="images/web/hero-2-audience-1600.jpg" srcset="images/web/hero-2-audience-480.jpg 480w, images/web/hero-2-audience-800.jpg 800w, images/web/hero-2-audience-1200.jpg 1200w, images/web/hero-2-audience-1600.jpg 1600w, images/web/hero-2-audience-2400.jpg 2400w" sizes="100vw"
+               width="6000" height="4000" alt="" loading="lazy" decoding="async">
+        </picture>
+        <picture class="hero-slide">
+          <source type="image/avif" srcset="images/web/hero-3-tables-480.avif 480w, images/web/hero-3-tables-800.avif 800w, images/web/hero-3-tables-1200.avif 1200w, images/web/hero-3-tables-1600.avif 1600w, images/web/hero-3-tables-2400.avif 2400w" sizes="100vw">
+          <source type="image/webp" srcset="images/web/hero-3-tables-480.webp 480w, images/web/hero-3-tables-800.webp 800w, images/web/hero-3-tables-1200.webp 1200w, images/web/hero-3-tables-1600.webp 1600w, images/web/hero-3-tables-2400.webp 2400w" sizes="100vw">
+          <img src="images/web/hero-3-tables-1600.jpg" srcset="images/web/hero-3-tables-480.jpg 480w, images/web/hero-3-tables-800.jpg 800w, images/web/hero-3-tables-1200.jpg 1200w, images/web/hero-3-tables-1600.jpg 1600w, images/web/hero-3-tables-2400.jpg 2400w" sizes="100vw"
+               width="6000" height="4000" alt="" loading="lazy" decoding="async">
+        </picture>
+        <!-- hero:end -->
+      </div>
+      <div class="hero-overlay"></div>
+
+      <div class="container hero-content">
+        <p class="eyebrow">Second annual · Rice University</p>
+        <h1>2026 Rice<br>GIS Showcase</h1>
+        <p class="hero-meta">
+          <span>November 17–18, 2026</span>
+          <span class="dot" aria-hidden="true"></span>
+          <span>Kraft Hall 130</span>
+        </p>
+        <p class="hero-lede">Rice students, researchers and community partners using geographic information systems (GIS) to address real-world challenges.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLScY5TujRGWm59wCykzZo75LYZDA9gfk7bEVgt50Jk0Tgc6GyQ/viewform?usp=header" target="_blank" rel="noopener">Register to attend</a>
+          <a class="btn btn-ghost" href="#schedule">See the schedule</a>
+        </div>
+
+        <div class="countdown" id="countdown" aria-live="polite">
+          <div><span data-unit="days">--</span><small>days</small></div>
+          <div><span data-unit="hours">--</span><small>hours</small></div>
+          <div><span data-unit="minutes">--</span><small>minutes</small></div>
+        </div>
+      </div>
+
+      <div class="hero-dots" role="tablist" aria-label="Photo slides"></div>
+    </section>
+
+    <!-- ============ OVERVIEW ============ -->
+    <section class="section" id="overview">
+      <div class="container overview-grid">
+        <div class="overview-text">
+          <p class="eyebrow eyebrow-dark">Overview</p>
+          <h2>Rice 2026 GIS Showcase</h2>
+          <p class="lead">Get ready to join us on <strong>Tuesday, November 17th, 2026</strong> for the second Rice GIS Showcase. This year's showcase will feature presentations from cutting-edge spatial research from Rice faculty, research centers, and graduate students. Share your ideas and make cross-disciplinary connections.</p>
+          <p>The Rice GIS Showcase is a one-day meeting of GIS researchers and teachers across the university to present completed or in-progress research and new tools in the field. Attendees will also have the chance to network with like-minded researchers, share research strategies, and foster intra-university collaboration. The showcase will include short informal presentations and tables for GIS researchers and groups. The event will be open to all students, staff, and faculty of the university. Snacks and lunch will be provided!</p>
+        </div>
+
+        <dl class="facts">
+          <div class="fact">
+            <dt>Showcase</dt>
+            <dd>Tue, Nov 17 · 8:45 AM – 3:30 PM</dd>
+          </div>
+          <div class="fact">
+            <dt>GIS Day workshops</dt>
+            <dd>Wed, Nov 18 · 10:00 AM – 4:00 PM</dd>
+          </div>
+          <div class="fact">
+            <dt>Where</dt>
+            <dd>Kraft Hall, Room 130</dd>
+          </div>
+          <div class="fact">
+            <dt>Who</dt>
+            <dd>Open to all Rice students, staff &amp; faculty</dd>
+          </div>
+          <div class="fact">
+            <dt>Food</dt>
+            <dd>Breakfast, snacks &amp; lunch provided</dd>
+          </div>
+          <button class="btn btn-outline btn-block" type="button" data-ics="showcase">Add showcase to calendar</button>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============ REGISTER / GET INVOLVED ============ -->
+    <section class="section section-tint" id="register">
+      <div class="container">
+        <p class="eyebrow eyebrow-dark">Get involved</p>
+        <h2>Register</h2>
+        <div class="cards-3">
+          <a class="action-card" href="https://docs.google.com/forms/d/e/1FAIpQLScY5TujRGWm59wCykzZo75LYZDA9gfk7bEVgt50Jk0Tgc6GyQ/viewform?usp=header" target="_blank" rel="noopener">
+            <picture><source type="image/avif" srcset="images/web/icon-attendee-160.avif"><source type="image/webp" srcset="images/web/icon-attendee-160.webp"><img src="images/web/icon-attendee-160.png" alt="" width="80" height="80" loading="lazy" decoding="async"></picture>
+            <h3>Attend the showcase</h3>
+            <p>Reserve your spot for talks, tables, and lunch on November 17.</p>
+            <span class="card-link">Register as an attendee <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="action-card" href="https://docs.google.com/forms/d/e/1FAIpQLScNZU-jvAefx687M_rbMYLg8K47IBhP6lGxiFNifNk9-pCR3w/viewform?usp=publish-editor" target="_blank" rel="noopener">
+            <picture><source type="image/avif" srcset="images/web/icon-storymap-160.avif"><source type="image/webp" srcset="images/web/icon-storymap-160.webp"><img src="images/web/icon-storymap-160.png" alt="" width="80" height="80" loading="lazy" decoding="async"></picture>
+            <h3>Enter the StoryMap contest</h3>
+            <p>Submit a StoryMap for the gallery session and competition.</p>
+            <span class="card-link">Register for the contest <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="action-card" href="#workshops">
+            <picture><source type="image/avif" srcset="images/web/icon-workshop-160.avif"><source type="image/webp" srcset="images/web/icon-workshop-160.webp"><img src="images/web/icon-workshop-160.png" alt="" width="80" height="80" loading="lazy" decoding="async"></picture>
+            <h3>Join a workshop</h3>
+            <p>Hands-on ArcGIS sessions on GIS Day, November 18.</p>
+            <span class="card-link">Pick a workshop <span aria-hidden="true">→</span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SHOWCASE (presenters & partners) ============ -->
+    <section class="section" id="showcase">
+      <div class="container">
+        <p class="eyebrow eyebrow-dark">Showcase</p>
+        <h2>Presenters &amp; partners</h2>
+        <p class="section-intro">Faculty, research centers, graduate and undergraduate students presenting spatial research, plus tables from GIS groups and community partners.</p>
+
+        <!-- Filled from the Google Sheet "Presenters" and "Partners" tabs (snapshot between markers). -->
+        <div class="people-grid" data-sheet="presenters">
+          <!-- presenters:start (generated, do not edit) -->
+          <article class="person" id="noemi-vergopolan"><img class="avatar" src="https://profiles.rice.edu/sites/g/files/bxs3881/files/2025-03/Vergopolan_Noemi-Mar2025-600.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="72" height="72"><p class="person-role">Faculty</p><h3><a href="https://profiles.rice.edu/faculty/noemi-vergopolan" target="_blank" rel="noopener">Noemi Vergopolan</a></h3><p class="role">Earth, Environmental and Planetary Sciences</p><p class="bio is-clamped">Dr. Noemi Vergopolan is a computational hydrologist on the water and climate nexus. Her research aims to aid actionable decision-making by improving hydrological information for monitoring and forecasting hydrological extremes and their impacts at the local scales. To this end, she develops scalable computational approaches for high-resolution hydrological prediction by leveraging advances in satellite remote sensing, land surface modeling, machine learning, data fusion, and high-performance computing.</p><button type="button" class="bio-toggle" aria-expanded="false">Read more</button></article>
+          <article class="person" id="james-r-elliot"><img class="avatar" src="https://profiles.rice.edu/sites/g/files/bxs3881/files/2023-05/Elliott_SOCI_Hi_Res_Headshot--2022-1x1crop.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="72" height="72"><p class="person-role">Faculty</p><h3><a href="https://profiles.rice.edu/faculty/james-r-elliott" target="_blank" rel="noopener">James R. Elliot</a></h3><p class="role">Sociology</p><p class="bio is-clamped">James (Jim) Elliott is an award-winning sociologist who earned his Ph.D. in Sociology (with a minor in Geography) from the University of Wisconsin-Madison. He then trained as a Postdoctoral Fellow with the Carolina Population Center at UNC-Chapel Hill. Before coming to Rice, he earned tenure at the University of Oregon and Tulane University, where he received presidential awards for his undergraduate, graduate, and service-learning teaching.</p><button type="button" class="bio-toggle" aria-expanded="false">Read more</button></article>
+          <article class="person" id="elizabeth-roberto"><img class="avatar" src="https://profiles.rice.edu/sites/g/files/bxs3881/files/2025-04/elizabeth-roberto-2025-600px.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="72" height="72"><p class="person-role">Faculty</p><h3><a href="https://profiles.rice.edu/faculty/elizabeth-roberto" target="_blank" rel="noopener">Elizabeth Roberto</a></h3><p class="role">Sociology</p><p class="bio is-clamped">Elizabeth Roberto is an Assistant Professor in the Department of Sociology and the founding Co-Director of the Center for Computational Insights on Inequality and Society at Rice University (CIISR). She has broad research interests in social and spatial inequality, a substantive focus on residential segregation, and methodological expertise in computational social science and quantitative methods. Her research uses innovative methods to examine the complex relationship between the social and built environment of cities. Dr. Roberto received a Ph.D. in Sociology from Yale University. She was awarded a James S. McDonnell Foundation Postdoctoral Fellowship Award in Studying Complex Systems, which supported her postdoctoral research at Princeton University. Her research has also been supported by the American Sociological Association and the National Academies, and she is the recipient of a CAREER Award from the National Science Foundation.</p><button type="button" class="bio-toggle" aria-expanded="false">Read more</button></article>
+          <article class="person" id="bruno-sousa"><img class="avatar" src="https://lh3.googleusercontent.com/a/ACg8ocKQ8D9qLtXkOyv4FM6jqMIf9kQzRUX23sjZLlUPd-fhDnTHYftA=s360-c-no" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="72" height="72"><p class="person-role">Staff</p><h3><a href="https://www.linkedin.com/in/brunocastrosousa/" target="_blank" rel="noopener">Bruno Sousa</a></h3><p class="role">Center for Research Computing</p><p class="bio is-clamped">Bruno Sousa specializes in geospatial analysis, data visualization, and web applications. His projects cover fields including space exploration, public health, disaster response, environmental monitoring, and cultural heritage preservation.</p><button type="button" class="bio-toggle" aria-expanded="false">Read more</button></article>
+          <article class="person" id="kyle-ostlind"><img class="avatar" src="https://static.wixstatic.com/media/d29356_a858ae4629cd4ae1b5e8e736d35e11d6~mv2.jpg/v1/fill/w_490,h_490,al_c,q_80,usm_4.00_1.00_0.00,enc_avif,quality_auto/Image-empty-state.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="72" height="72"><p class="person-role">Grad Student</p><h3><a href="https://sspeed.rice.edu/team/kyle-ostlind" target="_blank" rel="noopener">Kyle Ostlind</a></h3><p class="role">SSPEED Center</p><p class="bio is-clamped">Growing up in Houston, Kyle is intimately familiar with the flood issues that have long plagued the city. He hopes to use modeling softwares such as HEC-HMS and 2D HEC-RAS to help develop innovative flood mitigation strategies as well as to improve our understanding of and ability to model the impact of storms on the Houston area. Furthermore, Kyle is interested in helping improve the modeling of floods related to tropical cyclone rainfall and storm surge. In the future, Kyle hopes to enter industry and work to help cities become more resilient in the face of an increasingly more volatile climate.</p><button type="button" class="bio-toggle" aria-expanded="false">Read more</button></article>
+          <article class="person" id="eleanor-moreland"><img class="avatar" src="https://profiles.rice.edu/sites/g/files/bxs3881/files/2023-03/Moreland_Feb2023-5704.JPG" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="72" height="72"><p class="person-role">Grad Student</p><h3><a href="https://eleanormoreland.com/" target="_blank" rel="noopener">Eleanor Moreland</a></h3><p class="role">Earth, Environmental and Planetary Sciences</p><p class="bio">Ellie a Ph.D. candidate at Rice University studying planetary mineralogy, geochemistry, and surface processes.</p></article>
+          <!-- presenters:end -->
+        </div>
+
+        <h3 class="subhead">Partners</h3>
+        <ul class="logo-row" data-sheet="partners">
+          <!-- partners:start (generated, do not edit) -->
+          <li class="logo-tile"><a href="https://library.rice.edu/places/gisdata-center-gdc" target="_blank" rel="noopener" title="Fondren Library"><img src="https://www.arcgis.com/sharing/rest/content/items/ab1e103afee64134a74ff51fb13f0af0/resources/OOM8vaiy7a86WUgT85GR-.png?w=200" alt="Fondren Library" loading="lazy" decoding="async"></a></li>
+          <li class="logo-tile"><a href="https://kinder.rice.edu" target="_blank" rel="noopener" title="Kinder Institute"><img src="https://kinder.rice.edu/sites/g/files/bxs4896/files/2022-07/Kinder%20Institute%20logo%20color%20stacked2.png" alt="Kinder Institute" loading="lazy" decoding="async"></a></li>
+          <li class="logo-tile"><a href="https://researchcomputing.rice.edu/" target="_blank" rel="noopener" title="Center for Research Computing"><img src="https://www.arcgis.com/sharing/rest/content/items/b98190c955da4aea8a76d9257ec461ca/resources/images/widget_718/1788274153265.jpg?token=aWNp89A9NAXTSwmcdBxJcAg..QOk6UhH2xNsoSC5GKeNJL6De-uUqeY_fm49wgUpWWsrsD843T0yLYo8CpEdfgQeqCqR7hl18qdSzh4bftFmdQdlLurhmDwd3Ryjc1x6XKJLruNt1jQY_UXsfQozoGz2CvhzZzPF1GU1RRCrSTInyBcajuWJocsqEqtl8A6mjxjlZtRWgmEE2yr3wYg-PgRzvL0AYramSaKr169pvGDCHPOsybjtqAv986iQdwV7vjuE_nVKGAb0." alt="Center for Research Computing" loading="lazy" decoding="async"></a></li>
+          <!-- partners:end -->
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ SCHEDULE ============ -->
+    <section class="section section-dark" id="schedule">
+      <div class="container">
+        <p class="eyebrow">Schedule</p>
+        <h2>Tuesday, November 17</h2>
+
+        <div class="legend" aria-hidden="true">
+          <span class="tag tag-talk">Talk</span>
+          <span class="tag tag-student">Student</span>
+          <span class="tag tag-panel">Discussion</span>
+          <span class="tag tag-break">Break</span>
+          <span class="tag tag-contest">Contest</span>
+        </div>
+
+        <!-- Filled from the Google Sheet "Schedule" tab. Between the markers is a snapshot, refreshed by update-site.bat. -->
+        <ol class="timeline" data-sheet="schedule">
+          <!-- schedule:start (generated, do not edit) -->
+          <li data-start="08:45" data-end="09:00"><time>8:45 – 9:00 AM</time><div><span class="tag tag-break">Welcome</span><h3>Opening remarks &amp; breakfast</h3></div></li>
+          <li data-start="09:00" data-end="09:35"><time>9:00 – 9:35 AM</time><div><span class="tag tag-talk">Talk</span><h3>First Presenter (Main) <span class="tbd">TBD</span></h3></div></li>
+          <li data-start="09:35" data-end="10:10"><time>9:35 – 10:10 AM</time><div><span class="tag tag-student">Grad student</span><h3>Grad Student <span class="tbd">TBD</span></h3></div></li>
+          <li data-start="10:10" data-end="10:30"><time>10:10 – 10:30 AM</time><div><span class="tag tag-student">Undergrad</span><h3>Undergrad <span class="tbd">TBD</span></h3></div></li>
+          <li data-start="10:30" data-end="11:00"><time>10:30 – 11:00 AM</time><div><span class="tag tag-panel">Round table</span><h3>Round table discussion (AI in GIS)</h3></div></li>
+          <li data-start="11:00" data-end="11:20"><time>11:00 – 11:20 AM</time><div><span class="tag tag-break">Break</span><h3>Break for partners</h3></div></li>
+          <li data-start="11:20" data-end="12:00"><time>11:20 AM – 12:00 PM</time><div><span class="tag tag-break">Lunch</span><h3>Lunch</h3></div></li>
+          <li data-start="12:00" data-end="12:35"><time>12:00 – 12:35 PM</time><div><span class="tag tag-talk">Talk</span><h3>Presenter (Main) <span class="tbd">TBD</span></h3></div></li>
+          <li data-start="12:35" data-end="13:10"><time>12:35 – 1:10 PM</time><div><span class="tag tag-talk">Talk</span><h3>Presenter (Main) <span class="tbd">TBD</span></h3></div></li>
+          <li data-start="13:10" data-end="13:45"><time>1:10 – 1:45 PM</time><div><span class="tag tag-student">Grad student</span><h3>Grad Student <span class="tbd">TBD</span></h3></div></li>
+          <li data-start="13:45" data-end="14:05"><time>1:45 – 2:05 PM</time><div><span class="tag tag-student">Undergrad</span><h3>Undergrad <span class="tbd">TBD</span></h3></div></li>
+          <li data-start="14:05" data-end="14:25"><time>2:05 – 2:25 PM</time><div><span class="tag tag-break">Break</span><h3>Break for partners</h3></div></li>
+          <li data-start="14:25" data-end="15:15"><time>2:25 – 3:15 PM</time><div><span class="tag tag-contest">Contest</span><h3>Map Competion</h3></div></li>
+          <li data-start="15:15" data-end="15:30"><time>3:15 – 3:30 PM</time><div><span class="tag tag-break">Closing</span><h3>Final Remarks</h3></div></li>
+          <!-- schedule:end -->
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ WORKSHOPS ============ -->
+    <section class="section" id="workshops">
+      <div class="container">
+        <p class="eyebrow eyebrow-dark">GIS Day · Wednesday, November 18</p>
+        <h2>GIS Day workshops</h2>
+        <p class="section-intro">Attend a hands-on workshop on GIS Day. No prior GIS experience needed for Workshop I.</p>
+
+        <div class="cards-3">
+          <article class="workshop">
+            <picture>
+              <source type="image/avif" srcset="images/web/workshop-arcgis-online-480.avif 480w, images/web/workshop-arcgis-online-800.avif 800w, images/web/workshop-arcgis-online-1200.avif 1200w" sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 960px) calc(50vw - 28px), 370px">
+              <source type="image/webp" srcset="images/web/workshop-arcgis-online-480.webp 480w, images/web/workshop-arcgis-online-800.webp 800w, images/web/workshop-arcgis-online-1200.webp 1200w" sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 960px) calc(50vw - 28px), 370px">
+              <img src="images/web/workshop-arcgis-online-1200.jpg" srcset="images/web/workshop-arcgis-online-480.jpg 480w, images/web/workshop-arcgis-online-800.jpg 800w, images/web/workshop-arcgis-online-1200.jpg 1200w" sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 960px) calc(50vw - 28px), 370px" alt="ArcGIS Online maps shown on several devices" width="1200" height="630" loading="lazy" decoding="async">
+            </picture>
+            <div class="workshop-body">
+              <p class="workshop-num">Workshop I</p>
+              <h3>Introduction to ArcGIS Online</h3>
+              <p class="workshop-time">10:00 – 11:30 AM</p>
+              <p>Learn how to navigate GIS and make your first map!</p>
+              <a class="btn btn-primary" href="https://library.rice.edu/courses/gis-day-workshop-i-intro-arcgis-online" target="_blank" rel="noopener">Register now</a>
+            </div>
+          </article>
+          <article class="workshop">
+            <picture>
+              <source type="image/avif" srcset="images/web/workshop-storymaps-480.avif 480w, images/web/workshop-storymaps-552.avif 552w" sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 960px) calc(50vw - 28px), 370px">
+              <source type="image/webp" srcset="images/web/workshop-storymaps-480.webp 480w, images/web/workshop-storymaps-552.webp 552w" sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 960px) calc(50vw - 28px), 370px">
+              <img src="images/web/workshop-storymaps-552.jpg" srcset="images/web/workshop-storymaps-480.jpg 480w, images/web/workshop-storymaps-552.jpg 552w" sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 960px) calc(50vw - 28px), 370px" alt="An ArcGIS StoryMap with a photo map tour" width="552" height="328" loading="lazy" decoding="async">
+            </picture>
+            <div class="workshop-body">
+              <p class="workshop-num">Workshop II</p>
+              <h3>Creating StoryMaps</h3>
+              <p class="workshop-time">12:30 – 2:00 PM</p>
+              <p>Create your first dynamic and immersive StoryMap!</p>
+              <a class="btn btn-primary" href="https://library.rice.edu/courses/gis-day-workshop-ii-arcgis-storymaps" target="_blank" rel="noopener">Register now</a>
+            </div>
+          </article>
+          <article class="workshop">
+            <picture>
+              <source type="image/avif" srcset="images/web/workshop-experience-builder-480.avif 480w, images/web/workshop-experience-builder-800.avif 800w, images/web/workshop-experience-builder-864.avif 864w" sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 960px) calc(50vw - 28px), 370px">
+              <source type="image/webp" srcset="images/web/workshop-experience-builder-480.webp 480w, images/web/workshop-experience-builder-800.webp 800w, images/web/workshop-experience-builder-864.webp 864w" sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 960px) calc(50vw - 28px), 370px">
+              <img src="images/web/workshop-experience-builder-864.png" srcset="images/web/workshop-experience-builder-480.png 480w, images/web/workshop-experience-builder-800.png 800w, images/web/workshop-experience-builder-864.png 864w" sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 960px) calc(50vw - 28px), 370px" alt="An Experience Builder web app dashboard" width="864" height="576" loading="lazy" decoding="async">
+            </picture>
+            <div class="workshop-body">
+              <p class="workshop-num">Workshop III</p>
+              <h3>Experience Builder</h3>
+              <p class="workshop-time">2:30 – 4:00 PM</p>
+              <p>Build an engaging web application with ExBuilder!</p>
+              <!-- PLACEHOLDER: add the Fondren registration URL for Workshop III -->
+              <a class="btn btn-primary is-placeholder" href="#" aria-disabled="true">Registration link TBD</a>
+            </div>
+          </article>
+        </div>
+
+        <button class="btn btn-outline" type="button" data-ics="workshops">Add workshops to calendar</button>
+      </div>
+    </section>
+
+    <!-- ============ GALLERY ============ -->
+    <!-- Photos come from images/gallery/ — run update-site.bat. Section hides itself when empty. -->
+    <section class="section section-dark" id="gallery" hidden>
+      <div class="container">
+        <p class="eyebrow eyebrow-dark">Gallery</p>
+        <h2>From the showcase</h2>
+        <div class="gallery-grid">
+          <!-- gallery:start (generated, do not edit) -->
+          <!-- gallery:end -->
+        </div>
+      </div>
+    </section>
+
+    <dialog class="lightbox" aria-label="Photo viewer">
+      <button class="lightbox-close" type="button" aria-label="Close">×</button>
+      <img alt="">
+      <p class="lightbox-caption"></p>
+    </dialog>
+
+    <!-- ============ VISIT ============ -->
+    <section class="section section-tint" id="visit">
+      <div class="container visit-grid">
+        <div>
+          <p class="eyebrow eyebrow-dark">Visit</p>
+          <h2>Kraft Hall, Room 130</h2>
+          <address>
+            Kraft Hall for the Social Sciences<br>
+            Rice University<br>
+            6100 Main St, Houston, TX 77005
+          </address>
+          <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&destination=29.715875,-95.402425" target="_blank" rel="noopener">Get directions</a>
+
+          <div class="visit-notes">
+            <h3>Parking</h3>
+            <!-- PLACEHOLDER: parking lot / visitor parking details -->
+            <p class="placeholder-text">Parking details TBD</p>
+            <h3>Accessibility</h3>
+            <!-- PLACEHOLDER: accessibility contact -->
+            <p class="placeholder-text">Accommodation contact TBD</p>
+          </div>
+        </div>
+        <div id="map" class="map" role="img" aria-label="Map of Rice University showing Kraft Hall"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <p class="footer-title">Rice GIS/Data Center</p>
+        <p>Fondren Library, Rice University</p>
+      </div>
+      <div>
+        <!-- PLACEHOLDER: contact email -->
+        <p>Questions? <span class="placeholder-text">Contact email TBD</span></p>
+      </div>
+      <p class="footer-small">© 2026 Rice University</p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="js/main.js"></script>
+  <script type="module" src="js/sheets.js"></script>
+</body>
+</html>
