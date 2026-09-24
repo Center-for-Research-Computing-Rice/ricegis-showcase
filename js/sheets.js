@@ -48,13 +48,39 @@ Promise.all(keys.map((k) => fetchText(tabUrl(k)).catch(() => null))).then((list)
   }
 });
 
-// "Read more" on long bios
+// "Read more" opens a bio dialog so the people grid layout stays put.
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('.bio-toggle');
   if (!btn) return;
-  const bio = btn.previousElementSibling;
-  const open = btn.getAttribute('aria-expanded') === 'true';
-  bio.classList.toggle('is-clamped', open);
-  btn.setAttribute('aria-expanded', String(!open));
-  btn.textContent = open ? 'Read more' : 'Show less';
+  const card = btn.closest('.person');
+  const dialog = document.querySelector('.bio-dialog');
+  if (!card || !dialog?.showModal) return;
+
+  const setText = (sel, text) => {
+    const el = dialog.querySelector(sel);
+    if (!el) return;
+    el.textContent = text || '';
+    el.hidden = !text;
+  };
+
+  setText('[data-bio-role]', card.querySelector('.person-role')?.textContent.trim());
+  setText('[data-bio-name]', card.querySelector('h3')?.textContent.trim());
+  setText('[data-bio-job]', card.querySelector('.job-title')?.textContent.trim());
+  setText('[data-bio-dept]', card.querySelector('.role')?.textContent.trim());
+  setText('[data-bio-text]', card.querySelector('.bio')?.textContent.trim());
+
+  const profile = dialog.querySelector('[data-bio-link]');
+  const href = card.querySelector('h3 a')?.href;
+  if (profile) {
+    if (href) { profile.href = href; profile.hidden = false; }
+    else { profile.hidden = true; profile.removeAttribute('href'); }
+  }
+  dialog.showModal();
+});
+
+document.querySelector('.bio-dialog-close')?.addEventListener('click', () => {
+  document.querySelector('.bio-dialog')?.close();
+});
+document.querySelector('.bio-dialog')?.addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) e.currentTarget.close();
 });

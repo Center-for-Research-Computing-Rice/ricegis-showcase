@@ -23,6 +23,7 @@ const COLUMNS = {
   visible: ['visible', 'show', 'published'],
   name: ['name', 'full name'],
   role: ['role', 'category'],
+  job_title: ['job_title', 'job title', 'position', 'appointment'],
   department: ['department', 'dept', 'organization', 'affiliation'],
   photo: ['photo', 'image', 'headshot', 'picture'],
   link: ['link', 'url', 'website', 'profile'],
@@ -122,25 +123,35 @@ const splitNames = (s) => (s || '').split(/\s*(?:;|&|\band\b|\n)\s*/).filter(Boo
 
 /* ---------- renderers (return HTML strings) ---------- */
 
+function renderScheduleItem(r, byName) {
+  const cat = categorize(r.type, r.title);
+  const heading = r.title || r.type || 'Session';
+  const names = splitNames(r.presenter);
+  const tbd = cat.person && !r.title && !names.length ? ' <span class="tbd">TBD</span>' : '';
+  const who = names.map((n) => {
+    const p = byName.get(n.toLowerCase());
+    const dept = p?.department ? ` · ${esc(p.department)}` : '';
+    return p ? `<a href="#${slug(p.name)}">${esc(p.name)}</a>${dept}` : esc(n);
+  }).join('<br>');
+  const sub = r.title && r.type && r.type !== r.title && !cat.person ? esc(r.type) : '';
+  return `<li data-start="${to24h(r.start)}" data-end="${to24h(r.end)}"><time>${esc(timeRange(r.start, r.end))}</time><div>` +
+    `<span class="tag tag-${cat.cls}">${esc(cat.label)}</span><h3>${esc(heading)}${tbd}</h3>` +
+    (who ? `<p class="who">${who}</p>` : '') +
+    (r.details ? `<p>${esc(r.details)}</p>` : sub ? `<p>${sub}</p>` : '') +
+    `</div></li>`;
+}
+
+function schedulePeriod(rows, label, byName) {
+  if (!rows.length) return '';
+  return `<div class="schedule-col"><h3 class="schedule-period">${esc(label)}</h3>` +
+    `<ol class="timeline">${rows.map((r) => renderScheduleItem(r, byName)).join('\n')}</ol></div>`;
+}
+
 export function renderSchedule(rows, presenters = []) {
   const byName = new Map(presenters.map((p) => [p.name.toLowerCase(), p]));
-  return rows.map((r) => {
-    const cat = categorize(r.type, r.title);
-    const heading = r.title || r.type || 'Session';
-    const names = splitNames(r.presenter);
-    const tbd = cat.person && !r.title && !names.length ? ' <span class="tbd">TBD</span>' : '';
-    const who = names.map((n) => {
-      const p = byName.get(n.toLowerCase());
-      const dept = p?.department ? ` · ${esc(p.department)}` : '';
-      return p ? `<a href="#${slug(p.name)}">${esc(p.name)}</a>${dept}` : esc(n);
-    }).join('<br>');
-    const sub = r.title && r.type && r.type !== r.title && !cat.person ? esc(r.type) : '';
-    return `<li data-start="${to24h(r.start)}" data-end="${to24h(r.end)}"><time>${esc(timeRange(r.start, r.end))}</time><div>` +
-      `<span class="tag tag-${cat.cls}">${esc(cat.label)}</span><h3>${esc(heading)}${tbd}</h3>` +
-      (who ? `<p class="who">${who}</p>` : '') +
-      (r.details ? `<p>${esc(r.details)}</p>` : sub ? `<p>${sub}</p>` : '') +
-      `</div></li>`;
-  }).join('\n');
+  const morning = rows.filter((r) => (to24h(r.start) || '99:99') < '12:00');
+  const afternoon = rows.filter((r) => (to24h(r.start) || '') >= '12:00');
+  return schedulePeriod(morning, 'Morning', byName) + schedulePeriod(afternoon, 'Afternoon', byName);
 }
 
 const ROLE_ORDER = ['faculty', 'staff', 'research', 'grad', 'undergrad', 'panel', 'partner'];
@@ -170,10 +181,11 @@ export function renderPresenters(people, schedule = []) {
       return `<article class="person" id="${slug(p.name)}">${avatar}` +
         (p.role ? `<p class="person-role">${esc(p.role)}</p>` : '') +
         `<h3>${name}</h3>` +
+        (p.job_title ? `<p class="job-title">${esc(p.job_title)}</p>` : '') +
         (p.department ? `<p class="role">${esc(p.department)}</p>` : '') +
         (talk ? `<p class="talk">${esc(talk)}</p>` : '') +
         (p.bio ? `<p class="bio${long ? ' is-clamped' : ''}">${esc(p.bio)}</p>` : '') +
-        (long ? `<button type="button" class="bio-toggle" aria-expanded="false">Read more</button>` : '') +
+        (long ? `<button type="button" class="bio-toggle">Read more</button>` : '') +
         `</article>`;
     }).join('\n');
 }

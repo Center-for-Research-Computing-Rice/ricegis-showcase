@@ -10,6 +10,7 @@
   /* ---------- Mobile nav ---------- */
   var toggle = document.querySelector('.nav-toggle');
   var nav = document.getElementById('site-nav');
+  var navLinks = Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]:not(.btn)'));
   toggle.addEventListener('click', function () {
     var open = toggle.getAttribute('aria-expanded') === 'true';
     toggle.setAttribute('aria-expanded', String(!open));
@@ -22,9 +23,88 @@
     }
   });
 
+  /* ---------- In-page links when embedded in an iframe ---------- */
+  // Full-height cross-origin embeds can't scroll the host page without a parent
+  // script. Instead, jump links focus that section under the nav (hide the rest).
+  function isEmbedded() {
+    try { return window.self !== window.top; } catch (e) { return true; }
+  }
+
+  if (isEmbedded()) {
+    document.documentElement.classList.add('is-embedded');
+
+    var focusBar = document.createElement('div');
+    focusBar.className = 'embed-focus-bar';
+    focusBar.hidden = true;
+    focusBar.innerHTML = '<p>Viewing <strong data-embed-label></strong></p>' +
+      '<button type="button" class="btn btn-sm btn-outline" data-embed-show-all>Show full page</button>';
+    var headerEl = document.querySelector('.site-header');
+    if (headerEl) headerEl.insertAdjacentElement('afterend', focusBar);
+
+    var embedBlocks = Array.prototype.slice.call(
+      document.querySelectorAll('main > .hero, main > .section')
+    );
+
+    function focusLabel(el) {
+      if (!el) return 'Full page';
+      if (el.classList.contains('hero')) return 'Home';
+      var h = el.querySelector('h2');
+      return (h && h.textContent.trim()) || el.id || 'Section';
+    }
+
+    function setEmbedFocus(id) {
+      var showAll = !id || id === 'top' || id === 'main';
+      var target = showAll ? null : document.getElementById(id);
+      if (target && !target.matches('.hero, .section')) {
+        target = target.closest('.hero, .section');
+      }
+      // Don't focus an intentionally hidden block (empty gallery).
+      if (target && target.hidden) target = null;
+      showAll = showAll || !target;
+
+      document.documentElement.classList.toggle('embed-focus', !showAll);
+      embedBlocks.forEach(function (block) {
+        block.classList.toggle('is-embed-active', !showAll && block === target);
+      });
+      focusBar.hidden = showAll;
+      if (!showAll) {
+        focusBar.querySelector('[data-embed-label]').textContent = focusLabel(target);
+        navLinks.forEach(function (a) {
+          a.classList.toggle('is-current', a.getAttribute('href') === '#' + target.id);
+        });
+        document.dispatchEvent(new CustomEvent('embed:focus', { detail: { id: target.id } }));
+      } else {
+        navLinks.forEach(function (a) { a.classList.remove('is-current'); });
+        document.dispatchEvent(new CustomEvent('embed:focus', { detail: { id: null } }));
+      }
+    }
+
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('[data-embed-show-all]')) {
+        e.preventDefault();
+        try { history.replaceState(null, '', location.pathname + location.search); } catch (err) { /* ignore */ }
+        setEmbedFocus(null);
+        return;
+      }
+      var a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      var href = a.getAttribute('href');
+      if (!href || href === '#') return;
+      var id = href.slice(1);
+      if (id !== 'top' && id !== 'main' && !document.getElementById(id)) return;
+      e.preventDefault();
+      try { history.replaceState(null, '', '#' + id); } catch (err2) { /* ignore */ }
+      setEmbedFocus(id);
+    });
+
+    if (location.hash.length > 1) {
+      var bootId = location.hash.slice(1);
+      requestAnimationFrame(function () { setEmbedFocus(bootId); });
+    }
+  }
+
   /* ---------- Highlight current section in nav ---------- */
-  var navLinks = Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]:not(.btn)'));
-  if ('IntersectionObserver' in window) {
+  if ('IntersectionObserver' in window && !document.documentElement.classList.contains('is-embedded')) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
@@ -200,5 +280,8 @@
       .bindPopup('<strong>Kraft Hall, Room 130</strong><br>2026 Rice GIS Showcase')
       .openPopup();
     map.on('click', function () { map.scrollWheelZoom.enable(); });
+    document.addEventListener('embed:focus', function (e) {
+      if (e.detail && e.detail.id === 'visit') setTimeout(function () { map.invalidateSize(); }, 50);
+    });
   }
 })();

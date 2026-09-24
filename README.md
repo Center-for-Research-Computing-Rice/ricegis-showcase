@@ -26,8 +26,8 @@ Edit the sheet; the website shows changes within ~5 minutes (Google's publishing
 | details | Optional second line |
 | visible | `no` hides the row. Blank or `yes` shows it |
 
-**Presenters tab:** name, role, department, photo, link, bio, visible.
-Cards are grouped Faculty → Staff → Grad → Undergrad, in sheet order within each group. A presenter's talk title is taken from the Schedule row that lists them. No photo → their initials are shown. Long bios get a "Read more" button.
+**Presenters tab:** name, role, job_title, department, photo, link, bio, visible.
+Cards are grouped Faculty → Staff → Grad → Undergrad, in sheet order within each group. `job_title` is the person’s appointment (e.g. Assistant Professor); `role` is only the card category badge. A presenter's talk title is taken from the Schedule row that lists them. No photo → their initials are shown. Long bios stay clipped on the card; **Read more** opens a dialog with the full text.
 
 **Partners tab:** name, logo_image, link, visible. No logo → the name is shown.
 
@@ -67,3 +67,7 @@ Search `index.html` for `PLACEHOLDER`:
 
 - Calendar downloads use `EVENTS` in `js/main.js` (UTC times; CST = UTC−6). They don't read the sheet, so update them if the day's start/end changes.
 - Map: Leaflet with OpenStreetMap street tiles and an Esri World Imagery satellite option. Kraft Hall's footprint comes from OpenStreetMap (relation 15661103); the pin is at 29.715875, −95.402425.
+
+## Embedding in another page
+
+When this site is in a full-height iframe, normal `#section` jumps can’t scroll the host page. The page detects the embed and turns those links into a **section focus** view: the chosen block appears under the nav, and a **Show full page** control restores everything. No changes are required on the host page.
