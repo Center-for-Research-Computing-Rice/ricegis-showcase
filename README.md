@@ -70,4 +70,4 @@ Search `index.html` for `PLACEHOLDER`:
 
 ## Embedding in another page
 
-When this site is in a full-height iframe, normal `#section` jumps can’t scroll the host page. The page detects the embed and turns those links into a **section focus** view: the chosen block appears under the nav, and a **Show full page** control restores everything. No changes are required on the host page.
+When this site is in a full-height iframe, plain `#section` hash links often don’t move the host page. In an embed, those clicks call `scrollIntoView()`, which scrolls ancestor frames (including the parent) so the section comes into view — no host-page script required.
