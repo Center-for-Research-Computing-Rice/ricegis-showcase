@@ -49,9 +49,36 @@ Promise.all(keys.map((k) => fetchText(tabUrl(k)).catch(() => null))).then((list)
 });
 
 // "Read more" opens a bio dialog so the people grid layout stays put.
+const bioDialogPark = document.querySelector('.bio-dialog')?.parentElement;
+
+function freezeScrollAround(fn) {
+  const x = window.scrollX;
+  const y = window.scrollY;
+  let parentX = 0;
+  let parentY = 0;
+  let canParent = false;
+  try {
+    parentX = window.parent.scrollX;
+    parentY = window.parent.scrollY;
+    canParent = true;
+  } catch { /* cross-origin */ }
+
+  fn();
+
+  const restore = () => {
+    window.scrollTo(x, y);
+    if (canParent) {
+      try { window.parent.scrollTo(parentX, parentY); } catch { /* ignore */ }
+    }
+  };
+  restore();
+  requestAnimationFrame(restore);
+}
+
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('.bio-toggle');
   if (!btn) return;
+  e.preventDefault();
   const card = btn.closest('.person');
   const dialog = document.querySelector('.bio-dialog');
   if (!card || !dialog?.showModal) return;
@@ -75,7 +102,20 @@ document.addEventListener('click', (e) => {
     if (href) { profile.href = href; profile.hidden = false; }
     else { profile.hidden = true; profile.removeAttribute('href'); }
   }
-  dialog.showModal();
+
+  // Park the dialog on the card so showModal's focus scroll stays in view
+  // (otherwise it scrolls to the dialog's idle DOM spot near Visit).
+  card.appendChild(dialog);
+  freezeScrollAround(() => {
+    dialog.showModal();
+    dialog.querySelector('.bio-dialog-close')?.focus({ preventScroll: true });
+  });
+
+  const repark = () => {
+    if (bioDialogPark && dialog.parentElement !== bioDialogPark) bioDialogPark.appendChild(dialog);
+    dialog.removeEventListener('close', repark);
+  };
+  dialog.addEventListener('close', repark);
 });
 
 document.querySelector('.bio-dialog-close')?.addEventListener('click', () => {
