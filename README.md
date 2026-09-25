@@ -27,7 +27,7 @@ Edit the sheet; the website shows changes within ~5 minutes (Google's publishing
 | visible | `no` hides the row. Blank or `yes` shows it |
 
 **Presenters tab:** name, role, job_title, department, photo, link, bio, visible.
-Cards are grouped Faculty → Staff → Grad → Undergrad, in sheet order within each group. `job_title` is the person’s appointment (e.g. Assistant Professor); `role` is only the card category badge. A presenter's talk title is taken from the Schedule row that lists them. No photo → their initials are shown. Long bios stay clipped on the card; **Read more** opens a dialog with the full text.
+Cards are grouped Faculty → Staff → Grad → Undergrad, in sheet order within each group. `job_title` is the person’s appointment (e.g. Assistant Professor); for two roles, separate with ` | ` (e.g. `Professor of Sociology | Co-Director, CFAR`). `role` is only the card category badge. A presenter's talk title is taken from the Schedule row that lists them. No photo → their initials are shown. Long bios stay clipped on the card; **Read more** keeps the card size, hides the photo, and scrolls the bio inside the card. A **View profile** link appears when the sheet has a `link` URL.
 
 **Partners tab:** name, logo_image, link, visible. No logo → the name is shown.
 

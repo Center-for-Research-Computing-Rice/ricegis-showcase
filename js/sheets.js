@@ -48,79 +48,77 @@ Promise.all(keys.map((k) => fetchText(tabUrl(k)).catch(() => null))).then((list)
   }
 });
 
-// "Read more" opens a bio dialog so the people grid layout stays put.
-const bioDialogPark = document.querySelector('.bio-dialog')?.parentElement;
+// Show "Read more" only when the clamped bio actually overflows.
+function syncBioToggles(root = document) {
+  root.querySelectorAll('.person').forEach((card) => {
+    const bio = card.querySelector('.bio');
+    const btn = card.querySelector('.bio-toggle');
+    if (!bio || !btn || card.classList.contains('is-reading')) return;
 
-function freezeScrollAround(fn) {
-  const x = window.scrollX;
-  const y = window.scrollY;
-  let parentX = 0;
-  let parentY = 0;
-  let canParent = false;
-  try {
-    parentX = window.parent.scrollX;
-    parentY = window.parent.scrollY;
-    canParent = true;
-  } catch { /* cross-origin */ }
-
-  fn();
-
-  const restore = () => {
-    window.scrollTo(x, y);
-    if (canParent) {
-      try { window.parent.scrollTo(parentX, parentY); } catch { /* ignore */ }
-    }
-  };
-  restore();
-  requestAnimationFrame(restore);
+    bio.classList.add('is-clamped');
+    // Force layout, then compare — +1px tolerance for subpixel rounding.
+    const overflows = bio.scrollHeight > bio.clientHeight + 1;
+    btn.hidden = !overflows;
+    if (!overflows) bio.classList.remove('is-clamped');
+  });
 }
 
+function closeReadingCard(card) {
+  const bio = card.querySelector('.bio');
+  const btn = card.querySelector('.bio-toggle');
+
+  // Reset while still overflow:auto — leftover scrollTop makes line-clamp
+  // show the middle of the bio instead of the start.
+  if (bio) {
+    bio.scrollTop = 0;
+    bio.scrollTo(0, 0);
+    const text = bio.textContent;
+    bio.textContent = text;
+  }
+
+  card.classList.remove('is-reading');
+  card.style.height = '';
+  if (bio) {
+    bio.classList.add('is-clamped');
+    bio.scrollTop = 0;
+  }
+  if (btn) {
+    btn.setAttribute('aria-expanded', 'false');
+    btn.textContent = 'Read more';
+  }
+}
+
+// "Read more" keeps the card the same size: hide the photo, scroll the bio inside.
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('.bio-toggle');
   if (!btn) return;
-  e.preventDefault();
   const card = btn.closest('.person');
-  const dialog = document.querySelector('.bio-dialog');
-  if (!card || !dialog?.showModal) return;
+  const bio = card?.querySelector('.bio');
+  if (!card || !bio) return;
 
-  const setText = (sel, text) => {
-    const el = dialog.querySelector(sel);
-    if (!el) return;
-    el.textContent = text || '';
-    el.hidden = !text;
-  };
-
-  setText('[data-bio-role]', card.querySelector('.person-role')?.textContent.trim());
-  setText('[data-bio-name]', card.querySelector('h3')?.textContent.trim());
-  setText('[data-bio-job]', card.querySelector('.job-title')?.textContent.trim());
-  setText('[data-bio-dept]', card.querySelector('.role')?.textContent.trim());
-  setText('[data-bio-text]', card.querySelector('.bio')?.textContent.trim());
-
-  const profile = dialog.querySelector('[data-bio-link]');
-  const href = card.querySelector('h3 a')?.href;
-  if (profile) {
-    if (href) { profile.href = href; profile.hidden = false; }
-    else { profile.hidden = true; profile.removeAttribute('href'); }
+  const closing = btn.getAttribute('aria-expanded') === 'true';
+  if (closing) {
+    closeReadingCard(card);
+    syncBioToggles(card);
+    return;
   }
 
-  // Park the dialog on the card so showModal's focus scroll stays in view
-  // (otherwise it scrolls to the dialog's idle DOM spot near Visit).
-  card.appendChild(dialog);
-  freezeScrollAround(() => {
-    dialog.showModal();
-    dialog.querySelector('.bio-dialog-close')?.focus({ preventScroll: true });
+  document.querySelectorAll('.person.is-reading').forEach((other) => {
+    if (other !== card) closeReadingCard(other);
   });
 
-  const repark = () => {
-    if (bioDialogPark && dialog.parentElement !== bioDialogPark) bioDialogPark.appendChild(dialog);
-    dialog.removeEventListener('close', repark);
-  };
-  dialog.addEventListener('close', repark);
+  card.style.height = `${card.offsetHeight}px`;
+  card.classList.add('is-reading');
+  bio.classList.remove('is-clamped');
+  bio.scrollTop = 0;
+  btn.setAttribute('aria-expanded', 'true');
+  btn.textContent = 'Show less';
 });
 
-document.querySelector('.bio-dialog-close')?.addEventListener('click', () => {
-  document.querySelector('.bio-dialog')?.close();
-});
-document.querySelector('.bio-dialog')?.addEventListener('click', (e) => {
-  if (e.target === e.currentTarget) e.currentTarget.close();
-});
+function scheduleBioSync() {
+  requestAnimationFrame(() => syncBioToggles());
+}
+scheduleBioSync();
+document.addEventListener('sheet:updated', scheduleBioSync);
+window.addEventListener('resize', scheduleBioSync);
+if (document.fonts?.ready) document.fonts.ready.then(scheduleBioSync);

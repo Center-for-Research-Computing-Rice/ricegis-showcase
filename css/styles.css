@@ -217,61 +217,98 @@ a { color: var(--rice-blue-2); }
 .card-link { font-weight: 600; color: var(--rice-blue-2); }
 
 /* People */
-.people-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; align-items: start; }
-.person { padding: 24px; border-radius: var(--radius); background: var(--tint); }
+.people-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; align-items: stretch; }
+.person {
+  display: flex; flex-direction: column; align-items: stretch;
+  height: 100%; padding: 24px; border-radius: var(--radius); background: var(--tint);
+  scroll-margin-top: calc(var(--header-h) + 16px);
+}
+.person-head {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 14px 16px;
+  align-items: start;
+  margin-bottom: .35em;
+}
 .person .avatar {
-  width: 64px; height: 64px; border-radius: 50%; margin-bottom: 14px;
+  width: 72px; height: 72px; border-radius: 50%; margin: 0;
   background: repeating-linear-gradient(135deg, #dfe4ec 0 6px, #d3d9e3 6px 12px);
 }
-.person h3 { font-size: 1.05rem; margin-bottom: .25em; }
-.person .job-title {
-  font-size: .88rem; font-weight: 500; color: var(--ink-soft); margin: 0 0 .2em;
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-}
-.person .role { font-size: .85rem; color: var(--rice-gray); margin-bottom: .5em; }
-.person .talk { font-size: .9rem; font-style: italic; color: var(--rice-gray); margin: 0 0 .5em; }
-.person { display: flex; flex-direction: column; align-items: flex-start; scroll-margin-top: calc(var(--header-h) + 16px); }
-.person:target { box-shadow: 0 0 0 3px var(--accent); }
 .person img.avatar { width: 72px; height: 72px; object-fit: cover; background: var(--line); }
 .avatar-initials {
   display: grid; place-items: center; width: 72px !important; height: 72px !important;
   background: var(--rice-blue) !important; color: #fff; font: 600 1.4rem/1 var(--serif);
 }
+.person-id { min-width: 0; display: flex; flex-direction: column; align-items: stretch; }
 .person-role {
   font: 700 .7rem/1 var(--sans); letter-spacing: .1em; text-transform: uppercase;
-  color: var(--rice-blue-2); margin-bottom: .6em;
+  color: var(--rice-blue-2); margin-bottom: .45em;
 }
-.person h3 a { color: inherit; text-decoration: none; }
-.person h3 a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
-.person .bio { font-size: .88rem; color: var(--ink-soft); margin: 0; }
-.person .bio.is-clamped { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.person h3 { font-size: 1.05rem; margin: 0 0 .25em; }
+.person .job-title {
+  font-size: .88rem; font-weight: 500; color: var(--ink-soft); margin: 0 0 .2em;
+  display: flex; flex-direction: column; gap: .1em;
+  max-height: calc(1.35em * 2 + .1em); overflow: hidden;
+}
+.person .job-title-line {
+  display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+  line-height: 1.35;
+}
+.person .role {
+  font-size: .85rem; color: var(--rice-gray); margin: 0;
+  display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+}
+.person .talk { font-size: .9rem; font-style: italic; color: var(--rice-gray); margin: .35em 0 .5em; }
+.person:target { box-shadow: 0 0 0 3px var(--accent); }
+.person .bio { font-size: .88rem; color: var(--ink-soft); margin: .5em 0 0; flex: 1 1 auto; }
+.person .bio.is-clamped {
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+  height: calc(1.6em * 4);
+}
+.person-actions {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px;
+  margin-top: auto; padding-top: 10px;
+}
+.person-profile {
+  font: 600 .85rem var(--sans); color: var(--rice-blue-2); text-decoration: none;
+}
+.person-profile:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+.person-profile span { font-size: .8em; }
 .bio-toggle {
-  margin-top: 6px; padding: 0; border: 0; background: none; cursor: pointer;
-  font: 600 .85rem var(--sans); color: var(--rice-blue-2);
+  margin: 0; padding: 0; border: 0; background: none; cursor: pointer;
+  font: 600 .85rem var(--sans); color: var(--rice-blue-2); text-align: left;
 }
 .bio-toggle:hover { text-decoration: underline; }
 
-.bio-dialog {
-  border: 0; padding: 0; border-radius: var(--radius); max-width: min(36rem, calc(100vw - 32px));
-  background: #fff; color: var(--ink); box-shadow: 0 16px 48px rgba(0, 32, 91, .2);
-  position: fixed;
+/* Same-size reading mode: photo off, bio scrolls inside the card */
+.person.is-reading {
+  overflow: hidden;
 }
-.bio-dialog::backdrop { background: rgba(0, 16, 45, .55); }
-.bio-dialog-inner { padding: 32px 36px 36px; }
-.bio-dialog .person-role { margin-bottom: .8em; }
-.bio-dialog h2 { font-size: 1.55rem; margin: 0 0 .35em; }
-.bio-dialog h2[hidden] { display: none; }
-.bio-dialog .job-title {
-  font-size: .95rem; font-weight: 500; color: var(--ink-soft); margin: 0 0 .25em;
-  display: block; -webkit-line-clamp: unset; overflow: visible;
+.person.is-reading .person-head {
+  grid-template-columns: minmax(0, 1fr);
 }
-.bio-dialog .role { font-size: .9rem; color: var(--rice-gray); margin: 0 0 1.1em; }
-.bio-dialog .bio { font-size: 1rem; line-height: 1.55; color: var(--ink-soft); margin: 0 0 1.25em; }
-.bio-dialog-close {
-  position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; border-radius: 50%;
-  border: 0; background: var(--tint); color: var(--ink); font-size: 1.4rem; line-height: 1; cursor: pointer;
+.person.is-reading .avatar,
+.person.is-reading .avatar-initials,
+.person.is-reading .job-title {
+  display: none !important;
 }
-.bio-dialog-close:hover { background: var(--line); }
+.person.is-reading .bio,
+.person.is-reading .bio.is-clamped {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  width: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin-bottom: 4px;
+  padding-right: 2px;
+  display: block;
+  -webkit-line-clamp: unset;
+}
+.person.is-reading .person-actions {
+  flex-shrink: 0;
+  background: var(--tint);
+}
 .timeline .who { color: rgba(255,255,255,.85); }
 .timeline .who a { color: #fff; text-decoration-color: var(--accent); }
 
@@ -387,7 +424,7 @@ address { font-style: normal; font-size: 1.1rem; margin-bottom: 1.5rem; color: v
 @media (max-width: 960px) {
   .overview-grid, .visit-grid { grid-template-columns: 1fr; }
   .cards-3 { grid-template-columns: 1fr 1fr; }
-  .people-grid, .logo-row, .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .logo-row, .gallery-grid { grid-template-columns: repeat(2, 1fr); }
   .schedule-grid { grid-template-columns: 1fr; gap: 32px; }
 }
 @media (max-width: 640px) {

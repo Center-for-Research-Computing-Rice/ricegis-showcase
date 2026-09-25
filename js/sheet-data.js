@@ -31,6 +31,12 @@ const COLUMNS = {
   logo: ['logo', 'logo_image', 'logo image', 'image'],
 };
 
+function formatJobTitle(s) {
+  const parts = String(s || '').split(/\s*\|\s*|\n+/).map((p) => p.trim()).filter(Boolean);
+  if (!parts.length) return '';
+  return `<p class="job-title">${parts.map((p) => `<span class="job-title-line">${esc(p)}</span>`).join('')}</p>`;
+}
+
 /* ---------- CSV ---------- */
 
 export function parseCsv(text) {
@@ -175,17 +181,27 @@ export function renderPresenters(people, schedule = []) {
       const avatar = photo
         ? `<img class="avatar" src="${esc(photo)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="72" height="72">`
         : `<div class="avatar avatar-initials" aria-hidden="true">${esc(initials(p.name))}</div>`;
-      const name = link ? `<a href="${esc(link)}" target="_blank" rel="noopener">${esc(p.name)}</a>` : esc(p.name);
       const talk = talks.get(p.name.toLowerCase());
-      const long = (p.bio || '').length > 160;
-      return `<article class="person" id="${slug(p.name)}">${avatar}` +
+      const hasBio = Boolean(p.bio);
+      const profile = link
+        ? `<a class="person-profile" href="${esc(link)}" target="_blank" rel="noopener">View profile <span aria-hidden="true">↗</span></a>`
+        : '';
+      const bioBtn = hasBio
+        ? `<button type="button" class="bio-toggle" aria-expanded="false" hidden>Read more</button>`
+        : '';
+      const actions = (profile || bioBtn)
+        ? `<div class="person-actions">${profile}${bioBtn}</div>`
+        : '';
+      return `<article class="person" id="${slug(p.name)}">` +
+        `<div class="person-head">${avatar}<div class="person-id">` +
         (p.role ? `<p class="person-role">${esc(p.role)}</p>` : '') +
-        `<h3>${name}</h3>` +
-        (p.job_title ? `<p class="job-title">${esc(p.job_title)}</p>` : '') +
+        `<h3>${esc(p.name)}</h3>` +
+        (p.job_title ? formatJobTitle(p.job_title) : '') +
         (p.department ? `<p class="role">${esc(p.department)}</p>` : '') +
+        `</div></div>` +
         (talk ? `<p class="talk">${esc(talk)}</p>` : '') +
-        (p.bio ? `<p class="bio${long ? ' is-clamped' : ''}">${esc(p.bio)}</p>` : '') +
-        (long ? `<button type="button" class="bio-toggle">Read more</button>` : '') +
+        (hasBio ? `<p class="bio is-clamped">${esc(p.bio)}</p>` : '') +
+        actions +
         `</article>`;
     }).join('\n');
 }
